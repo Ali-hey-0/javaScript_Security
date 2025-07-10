@@ -1,134 +1,171 @@
-# Device & Environment Info Collector
+# 🌐 Browser Reconnaissance Agent
 
-## Overview
+> *"The most dangerous vulnerabilities are the ones you don't know exist"*
 
-This project is a comprehensive JavaScript-based client-side data collector. It gathers a wide spectrum of device, browser, and network information from the user's environment and sends it securely to a specified Telegram chat via a bot. The project is designed for research, diagnostics, or administrative monitoring purposes.
+## 🔒 Disclaimer
+**This script is strictly for educational purposes and security research.** Unauthorized monitoring of user devices without explicit consent is illegal in most jurisdictions. Use only on systems you own or have explicit permission to test.
 
----
-
-## Features
-
-- **Permission Detection**: Checks browser permissions (camera, geolocation, microphone, notifications).
-- **IP and Location**: Fetches public IP and geo-details using `ipify` and `ipapi`.
-- **Device Fingerprinting**: Collects canvas, audio, WebGL, fonts, and related browser fingerprint data.
-- **Device Information**: Gathers details such as user agent, platform, language, screen size, memory, CPU, and more.
-- **Network & Battery**: Collects network type, battery status, and connection metrics.
-- **Geolocation**: Attempts GPS-based location, falls back to IP-based if denied.
-- **Sensors**: Reads motion, orientation, and ambient light (if available).
-- **Clipboard & Storage**: Captures clipboard, cookies, local/session storage, and IndexedDB availability.
-- **WebRTC Local IPs**: Attempts to enumerate local network IP addresses.
-- **Keystroke Capture**: Logs up to 20 keystrokes for diagnostic use.
-- **Media Access**: Optionally captures camera photo, screen, and audio metadata.
-- **Bluetooth & Extensions**: Probes for Bluetooth devices and common browser extensions.
-- **Visited Sites Cache Probe**: Uses image load timing to infer visits to popular social sites.
-- **Error Handling & Logging**: Robust handling and optional debug logging.
-- **Data Transmission**: Sends summary and media (photo/screenshot) to Telegram with retry logic and rate limiting.
-
----
-
-## Usage
-
-### 1. Clone or Download
-
-```bash
-git clone https://github.com/yourusername/device-info-collector.git
-cd device-info-collector
+```mermaid
+graph TD
+    A[User Browser] --> B[Data Collection]
+    B --> C[Parallel API Calls]
+    C --> D[Telegram Bot]
+    D --> E[Security Analysis]
+    C --> F[IP Lookup]
+    C --> G[Geolocation]
+    C --> H[Device Sensors]
+    C --> I[Media Devices]
+    C --> J[Network Analysis]
 ```
 
-### 2. Configuration
+## 🌟 Overview
+This browser-based reconnaissance agent demonstrates the extensive data collection capabilities of modern web browsers. It gathers over 20 categories of device and environmental information through parallel API calls, delivering results to a Telegram bot for security research purposes.
 
-- Edit `java.js` and set your own Telegram Bot Token and Chat ID:
-  ```js
-  const BOT_TOKEN = 'YOUR_TELEGRAM_BOT_TOKEN';
-  const CHAT_ID = 'YOUR_CHAT_ID';
-  ```
+## ✨ Key Features
 
-- Optionally, enable debug logging:
-  ```js
-  const DEBUG = true;
-  ```
+### 📋 Comprehensive Data Collection
+- **Device fingerprinting** (canvas, WebGL, audio, fonts)
+- **Network analysis** (public IP, ISP, geolocation, local IPs via WebRTC)
+- **Sensor monitoring** (accelerometer, gyroscope, ambient light, battery)
+- **Media access** (camera photo capture, microphone metadata, screen capture)
+- **Privacy indicators** (clipboard contents, visited sites, browser extensions)
+- **Browser storage** (cookies, localStorage, sessionStorage)
 
-### 3. Deploy
+### ⚡ Advanced Techniques
+- Parallel API calls for maximum efficiency
+- Cache timing attacks for visited site detection
+- Progressive camera capture with fallback constraints
+- Clipboard monitoring with paste event detection
+- Exponential backoff retry mechanism for Telegram API
 
-- **HTTPS is required** to access privileged APIs (camera, microphone, clipboard, etc.).
-- Deploy on platforms like [Vercel](https://vercel.com/), [Netlify](https://www.netlify.com/), or any HTTPS-capable host.
-- Open `index.html` in a browser with the script included, or embed the JS in your own page.
+### 🛡️ Operational Security
+- HTTPS enforcement for sensitive APIs
+- Data compression and chunking
+- Debug mode with verbose logging
+- Caching for non-volatile data
+- Randomized execution intervals
 
-### 4. Receive Data
+## ⚙️ Configuration
 
-- Data, screenshots, and (optionally) camera photos are sent to your specified Telegram chat.
-- Each run collects and transmits data at randomized intervals (base: 2 minutes).
+### Prerequisites
+1. Create a Telegram bot via [@BotFather](https://t.me/BotFather)
+2. Note your bot token (format: `1234567890:ABCdefGHIJKlmNoPQRsTUVwxyZ`)
+3. Get your chat ID using [@userinfobot](https://t.me/userinfobot)
 
----
-
-## File Structure
-
+### Script Setup
+Replace the following values in the script:
+```javascript
+const BOT_TOKEN = 'YOUR_TELEGRAM_BOT_TOKEN';  // From @BotFather
+const CHAT_ID = 'YOUR_CHAT_ID';                // From @userinfobot
+const DEBUG = true;                            // Enable verbose logging
 ```
-.
-├── java.js       # Main client script
-├── README.md     # Project documentation
-└── index.html    # (Optional) Example HTML to load script
-```
 
----
+## 🚀 Execution
 
-## Security & Privacy Disclaimer
-
-**This tool collects sensitive information and can access or transmit personal data. Do NOT use without informed user consent and compliance with local laws and regulations.**
-
-**Intended for authorized testing, diagnostics, or research only. Never use for unauthorized tracking or data collection.**
-
----
-
-## Customization
-
-- **Add/Remove Data Points**: Edit the relevant async function blocks in `captureAndSend()` as needed.
-- **Change Transmission Logic**: Modify `sendMessageToTelegramWithRetry()` or `sendPhotoWithRetry()` to integrate with other endpoints.
-- **Data Formatting**: Tweak `formatCollectedData()` for different summarization or reporting styles.
-
----
-
-## Example HTML Usage
-
+### Browser Embedding
 ```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Device Info Collector</title>
-</head>
-<body>
-  <script src="java.js"></script>
-</body>
-</html>
+<script src="java.js"></script>
 ```
 
+### Direct Execution
+1. Open browser Developer Tools (F12)
+2. Navigate to Console tab
+3. Paste the entire script
+4. Press Enter to execute
+
+### Testing Environments
+| Environment | Tested | Notes |
+|-------------|--------|-------|
+| Chrome      | ✅     | Full functionality |
+| Firefox     | ✅     | Most functionality |
+| Safari      | ⚠️     | Limited sensor access |
+| Brave       | ⚠️     | Blocks some fingerprinting |
+| Tor         | ❌     | Blocks most APIs |
+
+## 📊 Data Collected
+
+### Core Identification
+```mermaid
+pie
+    title Data Collection Categories
+    “Device Info” : 25
+    “Network/IP” : 20
+    “Geolocation” : 15
+    “Permissions” : 10
+    “Sensors” : 10
+    “Media Devices” : 10
+    “Browser Storage” : 5
+    “Other” : 5
+```
+
+### Detailed Inventory
+| Category | Data Points Collected |
+|----------|------------------------|
+| **Device Info** | User agent, screen resolution, CPU cores, device memory, touch support, pixel ratio, timezone |
+| **Network** | Public IP, ISP, ASN, geolocation, local IPs, connection type, downlink speed |
+| **Sensors** | Accelerometer, gyroscope, ambient light, battery status/level |
+| **Media** | Camera availability, microphone access, captured photo, screenshot |
+| **Privacy** | Clipboard contents, visited sites, browser extensions |
+| **Browser** | Cookies, localStorage, sessionStorage, IndexedDB support |
+
+## ⚠️ Security Considerations
+
+### HTTPS Requirements
+```mermaid
+graph LR
+    A[Camera Access] -->|Requires| B[HTTPS]
+    C[Microphone] -->|Requires| B
+    D[Geolocation] -->|Requires| B
+    E[Clipboard] -->|Requires| B
+    F[Screen Capture] -->|Requires| B
+```
+
+### Permission Dependencies
+| Feature | Required Permission |
+|---------|---------------------|
+| Camera | `navigator.mediaDevices.getUserMedia` |
+| Microphone | `navigator.mediaDevices.getUserMedia` |
+| Geolocation | `navigator.geolocation.getCurrentPosition` |
+| Clipboard | `navigator.clipboard.readText` |
+| Sensors | DeviceMotion and DeviceOrientation events |
+
+## 🛠️ Troubleshooting
+
+### Common Issues
+1. **Blocked Features**: 
+   - Enable insecure origins in `chrome://flags` for HTTP testing
+   - Add site exceptions in browser permissions
+   
+2. **Permission Denials**:
+   ```javascript
+   // In Chrome address bar:
+   chrome://settings/content/siteDetails?site=https://yourdomain.com
+   ```
+
+3. **Empty Results**:
+   - Verify Telegram bot token and chat ID
+   - Check firewall restrictions on Telegram API
+
+4. **Partial Data**:
+   - Some features require user interaction (click anywhere on page)
+   - Sensors need physical device movement
+
+### Debugging
+Enable debug mode in script:
+```javascript
+const DEBUG = true;
+```
+
+Sample debug output:
+```
+[DEBUG] Permissions: camera: "prompt", geolocation: "granted"
+[DEBUG] IP: 192.168.1.100
+[WARN] Camera: All camera constraints failed
+```
+
+## 📜 License
+This project is licensed under the [Ethical Security Research License](LICENSE) - free for educational use with strict prohibitions against unauthorized monitoring.
+
 ---
 
-## Dependencies
-
-- **No external libraries required.**
-- Uses modern browser APIs (`fetch`, `navigator`, `window`, etc.) and Telegram Bot API.
-
----
-
-## Troubleshooting
-
-- Make sure your deployment uses HTTPS.
-- Ensure your Telegram bot is active and the chat ID is correct.
-- Some APIs require user interaction or permissions (camera, microphone, clipboard, sensors).
-- Features may not work identically across all browsers/devices.
-- Check the browser console and set `DEBUG = true` for verbose logs.
-
----
-
-## License
-
-This project is provided for **educational and authorized diagnostic use only**. Check the LICENSE file or contact the author for more details.
-
----
-
-## Author
-
-- [Ali-hey-0]
-- [email:aliheydari1381doc@gmail.com]
+> *"Knowledge of vulnerabilities is the first step toward protection"*
